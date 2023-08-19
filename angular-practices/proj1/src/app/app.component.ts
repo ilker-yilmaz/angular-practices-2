@@ -4,6 +4,22 @@ import { Component } from '@angular/core';
   selector: 'app-root',
   // templateUrl: './app.component.html',
   template: `
+  <div>
+  <div *ngIf="visible">Gizlenecek/Gösterilecek Veri</div>
+  <div *ngIf="visible; else elseMessage">if message</div>
+  <ng-template #elseMessage>
+    else message
+  </ng-template>
+  <div>
+    <div *ngFor="let name of names;
+                                let i = index
+                                let isFirst = first;
+                                let isLast = last;
+                                let isEven = even;
+                                let isOdd = odd">
+                                 {{name}} - {{i}} - {{isFirst}} - {{isLast}} - {{isEven}} - {{isOdd}}</div>
+  <br>
+  <div *ngFor="let name of names;index as i">{{name}} - {{i}}</div>
   <input type="text" value="{{text}}">
   <p>{{text}}</p>
   <p>{{sayi}}</p>
@@ -21,11 +37,38 @@ import { Component } from '@angular/core';
   <br>
   {{text | uppercase}}
   {{person?.name}}
+  <div *ngFor="let name of names">{{name}}</div>
+  <ul>
+    <li *ngFor="let name of names">{{name}}</li>
+  </ul>
+  </div>
+  <div [ngSwitch]="rakam">
+    <div *ngSwitchCase="1">sayı 1</div>
+    <div *ngSwitchCase="2">sayı 2</div>
+    <div *ngSwitchDefault>Hiçbiri</div>
+
+  </div>
+
+  <input type="text" [ngClass]="c1">
+  </div>
+
+  <input type="text" [ngStyle]="style">
+  
   `,
   styleUrls: ['./app.component.scss']
+  // styles: [".myClass{background-color:red;}"]
 })
 export class AppComponent {
-  person: { name: string, surname: string } = { name: "ilker", surname: "yılmaz"}
+  style: any = {
+    'background-color': 'red',
+    'color' : 'white',
+    'font-size' : '12px'
+  }
+  c1: string = "myClass"
+  rakam: number = 1;
+  visible: boolean = true;
+  names: string[] = ["İlker", "Ahmet", "Hasan", "Fırat", "Furkan", "Resul", "Mert"];
+  person: { name: string, surname: string } = { name: "ilker", surname: "yılmaz" }
   html: string = "<h1>Merhaba</h1>";
   script: string = '<script>alert("merhaba")</script>'
   hi() {
